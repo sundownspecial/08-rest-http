@@ -3,6 +3,7 @@
 const Note = require('../model/note');
 const storage = require('../lib/storage')
 const debug = require('debug')('http:route-note')
+const fs = require('fs')
 
 module.exports = function(router) {
     router.post('/api/v1/note', (req,res) => {
@@ -71,7 +72,18 @@ module.exports = function(router) {
         
     })
 
-    router.delete('/api/v1/note', (req, res)=> {
-        
-    })
+    router.delete('/api/v1/note', (req, res) => {
+        try {
+          storage.delete('Note', req.body.id)
+          res.writeHead(201, {'Content-Type': 'application/json'})
+          res.end()
+            
+        } catch(err) {
+          debug(`Bad request: ${err}`)
+          res.writeHead(400, {'Content-Type': 'text/plain'})
+          res.write('Bad Request delete')
+          res.end()
+        }
+    
+      }) 
 }

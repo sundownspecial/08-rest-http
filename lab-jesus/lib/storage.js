@@ -64,6 +64,27 @@ storage.update = function(schema, item) {
       })
 }
 
-storage.delete = function() {
+storage.delete = function(schema, id) {
+    return new Promise((resolve, reject) => {
+        // if(!schema || !item) return reject(new Error('Cannot create a new item; Schema and Item required'))
+    
+        // if(!memory[schema]) memory[schema] = {}
+
+        // for(var i = 0; i < memory.length; i++) {
+        //     if(memory[schema][i]._id === id){
+    
+        //         delete memory[schema][i][_id];
+        //         delete memory[schema][i][content];
+        //         delete memory[schema][i][title];
+        //     }
+        // }
+        delete memory[schema][id];
+
+    
+        // debug(`right before return${memory[schema][item._id]}`)
+
+        return resolve(memory)
+      })
+
 
 }
