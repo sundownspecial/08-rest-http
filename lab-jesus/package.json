@@ -1,0 +1,15 @@
+{
+  "name": "lab-jesus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Jesus",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^22.1.4",
+    "nodemon": "^1.14.11"
+  }
+}
