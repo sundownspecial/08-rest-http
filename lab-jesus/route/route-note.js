@@ -14,6 +14,7 @@ module.exports = function(router) {
 
             storage.create('Note', newNote)
             .then(storedNote => {
+                console.log('storage: ',storage)
                 res.writeHead(201, {'Content-Type': 'application/json'})
                 res.write(JSON.stringify(storedNote))
                 res.end()
@@ -28,10 +29,45 @@ module.exports = function(router) {
     })
 
     router.get('/api/v1/note', (req, res)=> {
+        debug(`GET /api/v1/note: ${req}`)
+        try{
+
+            storage.fetchAll('Note', 'pony')
+            .then(storedNote => {
+                res.writeHead(201, {'Content-Type': 'application/json'})
+                res.write(JSON.stringify(storedNote))
+                res.end()
+            })
+        } catch(err) {
+            debug(`There was a bad request: ${err}`)
+
+            res.writeHead(400, {'Content-Type': 'text/plain'})
+            res.write('Bad Request')
+            res.end()
+        }
 
     })
 
     router.put('/api/v1/note', (req, res)=> {
+        try{
+            let newNote = new Note(req.body.title, req.body.content)
+            console.log(req.body.id)
+            newNote._id = req.body.id
+
+            storage.update('Note', newNote)
+            .then(storedNote => {
+                console.log('storage: ',storage)
+                res.writeHead(201, {'Content-Type': 'application/json'})
+                res.write(JSON.stringify(storedNote))
+                res.end()
+            })
+        } catch(err) {
+            debug(`There was a bad request: ${err}`)
+
+            res.writeHead(400, {'Content-Type': 'text/plain'})
+            res.write('Bad Request')
+            res.end()
+        }
         
     })
 
